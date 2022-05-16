@@ -23,4 +23,16 @@ public class Product {
     public float getPrice() {
         return price;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
 }

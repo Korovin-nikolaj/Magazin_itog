@@ -9,14 +9,12 @@ import java.util.HashSet;
 public class Storage {
 
     private static Storage instance;
-    //private String name;
-    private HashSet<Product> setOfProducts;
+    private final HashSet<Product> setOfProducts;
     private static final String CATALOG_NAME = "file/products/";
 
 
 
     private Storage(){
-        //this.name = "Основной склад";
         this.setOfProducts = new HashSet<Product>();
         init();
     }
