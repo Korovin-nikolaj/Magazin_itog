@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'org.gretty' version '3.0.7'
+    id 'war'
 }
 
 group 'org.example'

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Map;
 
 @WebServlet(urlPatterns = "/")
 public class HomePage extends HttpServlet {
@@ -47,12 +48,12 @@ public class HomePage extends HttpServlet {
             out.println("Цена от: <input name = \"priceFrom\" type = \"number\"/>  |  ");
             out.println("Цена до: <input name = \"priceUp\" type = \"number\"/> <br><br>");
             out.println("Страна производства: <input name = \"productCountry\"/> |  ");
-            out.println("Только со скидкой: <input name = \"discounted\"/ type=\"checkbox\"> <br><br>");
+            out.println("Только со скидкой: <input name = \"discounted\" type=\"checkbox\"/> <br><br>");
             out.println("<input type=\"submit\" value = \"Найти\"/>");
             out.println("</form>");
             out.println("<h3>Каталог товаров: </h3>");
-            for (Product product : storage.getSetOfProducts()) {
-                out.println("<p>Положить в корзину <a href=\"http://localhost:8082/putInBasket?productId="  + product.getId() + "\">" + product.getName() + "</a> по цене " + product.getPrice() + "</p>");
+            for (Map.Entry<String, Product> entry : storage.getMapOfProducts().entrySet()) {
+                out.println("<p>Положить в корзину <a href=\"http://localhost:8082/putInBasket?productId="  + entry.getKey() + "\">" + entry.getValue().getName() + "</a> по цене " + entry.getValue().getPrice() + "</p>");
             }
             out.println("</body>");
             out.println("</html>");

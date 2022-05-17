@@ -4,18 +4,18 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.HashMap;
 
 public class Storage {
 
     private static Storage instance;
-    private final HashSet<Product> setOfProducts;
+    private final HashMap<String,Product> mapOfProducts;
     private static final String CATALOG_NAME = "file/products/";
 
 
 
     private Storage(){
-        this.setOfProducts = new HashSet<Product>();
+        this.mapOfProducts = new HashMap<String,Product>();
         init();
     }
 
@@ -37,8 +37,11 @@ public class Storage {
         if (files != null) {
             for (File file : files) {
                 try (DataInputStream dis = new DataInputStream(new FileInputStream(CATALOG_NAME + file.getName()))) {
-                    Product p = new Product(dis.readUTF(), dis.readUTF(), dis.readFloat());
-                    setOfProducts.add(p);
+                    String name = dis.readUTF();
+                    String productId = dis.readUTF();
+                    float price = dis.readFloat();
+                    Product p = new Product(name, productId, price);
+                    mapOfProducts.put(productId,p);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -46,8 +49,8 @@ public class Storage {
         }
     }
 
-    public HashSet<Product> getSetOfProducts() {
-        return setOfProducts;
+    public HashMap<String,Product> getMapOfProducts() {
+        return mapOfProducts;
     }
 
 }

@@ -14,9 +14,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = "/putInBasket")
-public class PutInBasket extends HttpServlet {
-
+@WebServlet(urlPatterns = "/removeFromBasket")
+public class RemoveFromBasket extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String productId = request.getParameter("productId");
         if (productId != null) {
@@ -28,11 +27,11 @@ public class PutInBasket extends HttpServlet {
                 if (basket == null) {
                     basket = new ArrayList<Product>();
                 }
-                basket.add(product);
+                basket.remove(product);
                 session.setAttribute("basket", basket);
             }
         }
-        String path = "/";
+        String path = "/basket.jsp";
         ServletContext servletContext = getServletContext();
         RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
         requestDispatcher.forward(request, response);
