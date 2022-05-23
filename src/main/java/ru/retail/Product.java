@@ -3,13 +3,20 @@ package ru.retail;
 public class Product {
 
     private String name;
-    private String id;
+    private int id;
     private float price;
+    private String productCategory;
+    private String productCountry;
+    private boolean discounted;
 
-    public Product(String name, String id, float price) {
+
+    public Product(String name, int id, float price, String productCategory, String productCountry, boolean discounted) {
         this.name = name;
         this.id = id;
         this.price = price;
+        this.productCategory = productCategory;
+        this.productCountry = productCountry;
+        this.discounted = discounted;
     }
 
     @Override
@@ -21,7 +28,7 @@ public class Product {
         return name;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -33,7 +40,7 @@ public class Product {
         this.name = name;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

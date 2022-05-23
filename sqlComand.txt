@@ -1,0 +1,1 @@
+create table products (id int primary key auto_increment, productName varchar(50), price int, productCategory varchar(25), productCountry varchar(25), discounted boolean);
