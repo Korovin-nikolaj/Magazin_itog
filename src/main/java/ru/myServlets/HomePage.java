@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -22,6 +24,19 @@ public class HomePage extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         storage = Storage.getInstance();
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        Connection conn = Storage.getInstance().getConn();
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,6 +55,7 @@ public class HomePage extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<p><a href=\"http://localhost:8082/account\"> Профиль </a> | ");
+            out.println("<a href=\"http://localhost:8082/managerLogin.jsp\"> Войти как мененджер </a> | ");
             out.println("<a href=\"http://localhost:8082/basket.jsp\"> Корзина(" + basket.size() + ") </a></p>");
             out.println("<h3>Поиск товаров:</h3>");
             out.println("<form action=\"/search\" method=\"post\">");
@@ -52,7 +68,7 @@ public class HomePage extends HttpServlet {
             out.println("<input type=\"submit\" value = \"Найти\"/>");
             out.println("</form>");
             out.println("<h3>Каталог товаров: </h3>");
-            for (Map.Entry<String, Product> entry : storage.getMapOfProducts().entrySet()) {
+            for (Map.Entry<Integer, Product> entry : storage.getMapOfProducts().entrySet()) {
                 out.println("<p>Положить в корзину <a href=\"http://localhost:8082/putInBasket?productId="  + entry.getKey() + "\">" + entry.getValue().getName() + "</a> по цене " + entry.getValue().getPrice() + "</p>");
             }
             out.println("</body>");

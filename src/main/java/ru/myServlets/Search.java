@@ -19,7 +19,7 @@ public class Search extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String productName = (String)request.getParameter("productName");
         ArrayList<Product> foundProduct = new ArrayList<Product>();
-        for (Map.Entry<String, Product> entry : Storage.getInstance().getMapOfProducts().entrySet()) {
+        for (Map.Entry<Integer, Product> entry : Storage.getInstance().getMapOfProducts().entrySet()) {
             Product product = entry.getValue();
             if (product != null) {
                 if (product.getName().contains(productName)) {

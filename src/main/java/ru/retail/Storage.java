@@ -14,12 +14,13 @@ public class Storage {
 
     private static Storage instance;
     private final HashMap<Integer,Product> mapOfProducts;
+    private Connection conn;
     //private static final String CATALOG_NAME = "file/products/";
-
 
 
     private Storage(){
         this.mapOfProducts = new HashMap<Integer, Product>();
+        this.conn = null;
         init();
     }
 
@@ -58,7 +59,8 @@ public class Storage {
             String url = "jdbc:mysql://localhost/magazin";
             String username = "magazin_robot";
             String password = "magazin_password";
-            try(Connection conn = DriverManager.getConnection(url, username, password)){
+            try{
+                conn = DriverManager.getConnection(url, username, password);
                 Statement statement = conn.createStatement();
                 String sqlCommand = "select id, productName, price, productCategory, productCountry, discounted from products";
                 ResultSet resultSet = statement.executeQuery(sqlCommand);
@@ -73,6 +75,9 @@ public class Storage {
                     mapOfProducts.put(id, p);
                 }
             }
+            catch (Exception exc) {
+
+            }
         }
         catch (Exception exc) {
             System.out.println("Connection failed...");
@@ -84,4 +89,7 @@ public class Storage {
         return mapOfProducts;
     }
 
+    public Connection getConn() {
+        return conn;
+    }
 }
