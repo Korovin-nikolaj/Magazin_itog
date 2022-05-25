@@ -10,7 +10,7 @@
         <p><a href="http://localhost:8082/">На главную</a>  |  <a href="http://localhost:8082/account">Профиль</a>  |  <a href="http://localhost:8082/basket.jsp">Корзина ${basketSize}</a></p>
         <h3>Результаты поиска</h3>
         <c:forEach var="product" items="${foundProducts}">
-            <p><c:out value="${product}"/>  <a href="http://localhost:8082/putInBasket?productId=${product.id}">В корзину</a></p>
+            <p><c:out value="${product.value}"/>  <a href="http://localhost:8082/putInBasket?productId=${product.key}">В корзину</a></p>
         </c:forEach>
     </body>
 </html>

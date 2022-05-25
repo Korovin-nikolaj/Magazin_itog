@@ -1,8 +1,5 @@
 package ru.myServlets;
 
-import ru.retail.Product;
-import ru.retail.Storage;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,17 +16,13 @@ public class RemoveFromBasket extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String productId = request.getParameter("productId");
         if (productId != null) {
-            Storage storage = Storage.getInstance();
-            Product product = storage.getMapOfProducts().get(productId);
-            if (product != null) {
-                HttpSession session = request.getSession();
-                ArrayList<Product> basket = (ArrayList<Product>) session.getAttribute("basket");
-                if (basket == null) {
-                    basket = new ArrayList<Product>();
-                }
-                basket.remove(product);
-                session.setAttribute("basket", basket);
+            HttpSession session = request.getSession();
+            ArrayList<Integer> basket = (ArrayList<Integer>) session.getAttribute("basket");
+            if (basket == null) {
+                basket = new ArrayList<>();
             }
+            basket.remove(Integer.valueOf(productId));
+            session.setAttribute("basket", basket);
         }
         String path = "/basket.jsp";
         ServletContext servletContext = getServletContext();

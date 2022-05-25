@@ -1,8 +1,10 @@
 package ru.myServlets;
 
-import ru.retail.Product;
 import ru.retail.Storage;
+import ru.retail.service.ProductService;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,11 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 @WebServlet(urlPatterns = "/")
 public class HomePage extends HttpServlet {
@@ -40,45 +41,24 @@ public class HomePage extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
-
-        try (PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession();
-            ArrayList<Product> basket = (ArrayList<Product>) session.getAttribute("basket");
-            if (basket == null) {
-                basket = new ArrayList<Product>();
-            }
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Интернет-магазин</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<p><a href=\"http://localhost:8082/account\"> Профиль </a> | ");
-            out.println("<a href=\"http://localhost:8082/managerLogin.jsp\"> Войти как мененджер </a> | ");
-            out.println("<a href=\"http://localhost:8082/basket.jsp\"> Корзина(" + basket.size() + ") </a></p>");
-            out.println("<h3>Поиск товаров:</h3>");
-            out.println("<form action=\"/search\" method=\"post\">");
-            out.println("Наименование: <input name = \"productName\"/>  |  ");
-            out.println("Категория: <input name = \"productCategory\"/> <br><br>");
-            out.println("Цена от: <input name = \"priceFrom\" type = \"number\"/>  |  ");
-            out.println("Цена до: <input name = \"priceUp\" type = \"number\"/> <br><br>");
-            out.println("Страна производства: <input name = \"productCountry\"/> |  ");
-            out.println("Только со скидкой: <input name = \"discounted\" type=\"checkbox\"/> <br><br>");
-            out.println("<input type=\"submit\" value = \"Найти\"/>");
-            out.println("</form>");
-            out.println("<h3>Каталог товаров: </h3>");
-            for (Map.Entry<Integer, Product> entry : storage.getMapOfProducts().entrySet()) {
-                out.println("<p>Положить в корзину <a href=\"http://localhost:8082/putInBasket?productId="  + entry.getKey() + "\">" + entry.getValue().getName() + "</a> по цене " + entry.getValue().getPrice() + "</p>");
-            }
-            out.println("</body>");
-            out.println("</html>");
-
+        HttpSession session = request.getSession();
+        ArrayList<Integer> basket = (ArrayList<Integer>) session.getAttribute("basket");
+        if (basket == null) {
+            basket = new ArrayList<>();
         }
+        LinkedHashMap<Integer, String> allProducts = ProductService.getAllProducts();
+        request.setAttribute("basketSize", basket.size());
+        request.setAttribute("allProducts", allProducts);
+        String path = "/homePage.jsp";
+        ServletContext servletContext = getServletContext();
+        RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
+        requestDispatcher.forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
         doGet(request, response);
     }
 }
