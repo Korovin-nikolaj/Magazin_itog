@@ -16,18 +16,20 @@ import java.util.LinkedHashMap;
 @WebServlet(urlPatterns = "/search")
 public class Search extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String conditionText = "";
+        StringBuffer conditionText = new StringBuffer();
         String productName = request.getParameter("productName");
         String productCategory = request.getParameter("productCategory");
         String productCountry = request.getParameter("productCountry");
-        float priceFrom = Float.valueOf(request.getParameter("priceFrom"));
-        float priceUp = Float.valueOf(request.getParameter("priceUp"));
-        boolean discounted = Boolean.valueOf(request.getParameter("discounted"));
-        conditionText = addConditionChar(conditionText, "productName", productName);
-        conditionText = addConditionChar(conditionText, "productCategory", productCategory);
-        conditionText = addConditionChar(conditionText, "productCountry", productCountry);
-
-        LinkedHashMap<Integer, String> foundProducts = ProductService.findProducts(conditionText);
+        String priceFrom = request.getParameter("priceFrom");
+        String priceUp = request.getParameter("priceUp");
+        String discounted = request.getParameter("discounted");
+        addCondition(conditionText, "productName", productName, "like");
+        addCondition(conditionText, "productCategory", productCategory, "like");
+        addCondition(conditionText, "productCountry", productCountry, "like");
+        addCondition(conditionText, "price", priceFrom, ">");
+        addCondition(conditionText, "price", priceUp, "<");
+        addCondition(conditionText, "discounted", (discounted != null) ? "1": "", "=");
+        LinkedHashMap<Integer, String> foundProducts = ProductService.findProducts(conditionText.toString());
         request.setAttribute("foundProducts", foundProducts);
         int basketSize = 0;
         ArrayList<Integer> basket = (ArrayList<Integer>) request.getSession().getAttribute("basket");
@@ -41,15 +43,18 @@ public class Search extends HttpServlet {
         requestDispatcher.forward(request, response);
     }
 
-    private String addConditionChar(String conditionText, String columnName, String value) {
+    private void addCondition(StringBuffer conditionText, String columnName, String value, String conditionType) {
         if (value != null) {
             if (!value.isEmpty()) {
-                if (!conditionText.isEmpty()) {
-                    conditionText = conditionText + " and ";
+                if (!conditionText.toString().isEmpty()) { //TODO может есть у StringBuffer подобный метод.
+                    conditionText.append(" and ");
                 }
-                conditionText = conditionText + " " + columnName + " like '%" + value + "%'";
+                if (conditionType.equals("like")) {
+                    conditionText.append(columnName + " like '%" + value + "%'");
+                } else if ("<>=".contains(conditionType)) {
+                    conditionText.append(columnName + conditionType + value);
+                }
             }
         }
-        return conditionText;
     }
 }

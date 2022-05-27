@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 @WebServlet(urlPatterns = "/removeFromBasket")
 public class RemoveFromBasket extends HttpServlet {
@@ -17,9 +17,9 @@ public class RemoveFromBasket extends HttpServlet {
         String productId = request.getParameter("productId");
         if (productId != null) {
             HttpSession session = request.getSession();
-            ArrayList<Integer> basket = (ArrayList<Integer>) session.getAttribute("basket");
+            LinkedHashMap<Integer, String> basket = (LinkedHashMap<Integer, String>) session.getAttribute("basket");
             if (basket == null) {
-                basket = new ArrayList<>();
+                basket = new LinkedHashMap<>();
             }
             basket.remove(Integer.valueOf(productId));
             session.setAttribute("basket", basket);

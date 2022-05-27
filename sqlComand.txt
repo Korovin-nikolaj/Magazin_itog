@@ -1,1 +1,27 @@
-create table products (id int primary key auto_increment, productName varchar(50), price float, productCategory varchar(25), productCountry varchar(25), discounted boolean);
+create table products (id int primary key auto_increment,
+    productName varchar(50),
+    price float,
+    productCategory varchar(25),
+    productCountry varchar(25),
+    discounted boolean);
+
+create table clients (id int primary key auto_increment,
+    Name varchar(50),
+    phone varchar(25));
+
+create table orders (id int primary key auto_increment,
+    client int NOT NULL,
+    sum float,
+    address varchar(25),
+    status int,
+    comments varchar(50));
+
+create table orderComposition (orderId int NOT NULL,
+    productId int NOT NULL);
+
+create table statuses (id int primary key auto_increment,
+    name varchar(25) NOT NULL);
+
+insert into products (productName, price, productCategory, productCountry, discounted) values('Масло сливочное',600.0,'Молочные продукты','Россия',false);
+insert into products (productName, price, productCategory, productCountry, discounted) values('Творог',240.0,'Молочные продукты','Россия',false);
+insert into products (productName, price, productCategory, productCountry, discounted) values('Картофель',70.0,'Овощи','Россия',false);

@@ -7,7 +7,7 @@
         <title>Интернет-магазин</title>
     </head>
     <body>
-        <p><a href="http://localhost:8082/account"> Профиль </a> |  | <a href="http://localhost:8082/managerLogin.jsp"> Войти как мененджер </a> | <a href=\"http://localhost:8082/basket.jsp\"> Корзина(${basketSize}) </a></p>
+        <p><a href="http://localhost:8082/account"> Профиль </a> |  | <a href="http://localhost:8082/managerLogin.jsp"> Войти как мененджер </a> | <a href="http://localhost:8082/basket.jsp"> Корзина(${basketSize}) </a></p>
         <h3>Поиск товаров:</h3>
         <form action="/search" method="post">
             Наименование: <input name = "productName"/>  |  Категория: <input name = "productCategory"/> <br><br>
@@ -17,7 +17,7 @@
         </form>
         <h3>Каталог товаров: </h3>
         <c:forEach var="product" items="${allProducts}">
-            <p><c:out value="${product.value}"/>  <a href="http://localhost:8082/putInBasket?productId=${product.key}"> В корзину</a></p>
+            <p><c:out value="${product.value}"/>  <a href="http://localhost:8082/putInBasket?productId=${product.key}&productView=${product.value}"> В корзину</a></p>
         </c:forEach>
     </body>
 </html>

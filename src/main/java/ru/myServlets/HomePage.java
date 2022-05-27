@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 @WebServlet(urlPatterns = "/")
@@ -44,9 +43,9 @@ public class HomePage extends HttpServlet {
             throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        ArrayList<Integer> basket = (ArrayList<Integer>) session.getAttribute("basket");
+        LinkedHashMap<Integer, String> basket = (LinkedHashMap<Integer, String>) session.getAttribute("basket");
         if (basket == null) {
-            basket = new ArrayList<>();
+            basket = new LinkedHashMap<Integer, String>();
         }
         LinkedHashMap<Integer, String> allProducts = ProductService.getAllProducts();
         request.setAttribute("basketSize", basket.size());
