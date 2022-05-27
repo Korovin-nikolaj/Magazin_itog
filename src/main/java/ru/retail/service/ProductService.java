@@ -1,5 +1,6 @@
 package ru.retail.service;
 
+import ru.retail.Product;
 import ru.retail.Storage;
 
 import java.sql.Connection;
@@ -39,4 +40,30 @@ public class ProductService {
         }
         return allProducts;
     }
-}
+
+    public static int deleteProduct(String productId) {
+        if (productId != null) {
+            if (!productId.isEmpty()) {
+                Connection conn = Storage.getInstance().getConn();
+                try(Statement statement = conn.createStatement()) {
+                    String sqlCommand = "delete from products where id = " + productId + ";";
+                    System.out.println(sqlCommand);
+                    return statement.executeUpdate(sqlCommand);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return 0;
+    }
+
+    public static Product getProduct(String productId) {
+
+        return null;
+    }
+
+    public static int updateProduct(String productId) {
+        return 0;
+
+    }
+    }

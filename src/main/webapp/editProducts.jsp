@@ -8,8 +8,11 @@
     </head>
     <body>
         <p><a href="http://localhost:8082/">На главную</a>  |  <a href="http://localhost:8082/account">Профиль</a></p>
-        <c:if test="${countRows == 1}">
+        <c:if test="${countAddRows == 1}">
             Товар ${productName} был успешно добавлен!
+        </c:if>
+        <c:if test="${countDeleteRows == 1}">
+            Товар с id ${productId} был успешно удален!
         </c:if>
         <p> Ввод нового товара: </p>
         <form action="/inputProduct" method="post">

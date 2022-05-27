@@ -33,7 +33,7 @@ public class InputProduct extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        req.setAttribute("countRows", countRows);
+        req.setAttribute("countAddRows", countRows);
         req.setAttribute("productName", productName);
         String path = "/editProducts";
         ServletContext servletContext = getServletContext();
