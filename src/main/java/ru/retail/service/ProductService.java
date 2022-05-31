@@ -62,7 +62,7 @@ public class ProductService {
         return null;
     }
 
-    public static int updateProduct(String productId) {
+    public static int updateProduct(Product productId) {
         return 0;
 
     }

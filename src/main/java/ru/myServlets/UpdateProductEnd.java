@@ -1,5 +1,6 @@
 package ru.myServlets;
 
+import ru.retail.Product;
 import ru.retail.service.ProductService;
 
 import javax.servlet.RequestDispatcher;
@@ -22,8 +23,10 @@ public class UpdateProductEnd extends HttpServlet {
         String productCategory = req.getParameter("productCategory");
         String productCountry = req.getParameter("productCountry");
         String discounted = req.getParameter("discounted");
-        int countRows = ProductService.updateProduct(productId); // использовать продукт
-
+        Product product = new Product(productName, Integer.valueOf(productId), Float.valueOf(price), productCategory, productCountry, Boolean.valueOf(discounted));
+        int countRows = ProductService.updateProduct(product);
+        req.setAttribute("countUpdateRows", countRows);
+        req.setAttribute("productName", productName);
         LinkedHashMap<Integer, String> allProducts = ProductService.getAllProducts();
         req.setAttribute("allProducts", allProducts);
         String path = "/editProducts.jsp";

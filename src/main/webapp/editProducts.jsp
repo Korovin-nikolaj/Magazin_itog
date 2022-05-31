@@ -14,6 +14,9 @@
         <c:if test="${countDeleteRows == 1}">
             Товар с id ${productId} был успешно удален!
         </c:if>
+        <c:if test="${countUpdateRows == 1}">
+            Товар ${productName} был успешно обновлен!
+        </c:if>
         <p> Ввод нового товара: </p>
         <form action="/inputProduct" method="post">
             <p>Наименование товара: <input maxlength="50" size="50" name="productName"/></p>

@@ -7,7 +7,8 @@ create table products (id int primary key auto_increment,
 
 create table clients (id int primary key auto_increment,
     Name varchar(50),
-    phone varchar(25));
+    phone varchar(25),
+    hashPassword int);
 
 create table orders (id int primary key auto_increment,
     client int NOT NULL,
@@ -21,6 +22,9 @@ create table orderComposition (orderId int NOT NULL,
 
 create table statuses (id int primary key auto_increment,
     name varchar(25) NOT NULL);
+
+create table wallets (client int not null,
+    sum float not null);
 
 insert into products (productName, price, productCategory, productCountry, discounted) values('Масло сливочное',600.0,'Молочные продукты','Россия',false);
 insert into products (productName, price, productCategory, productCountry, discounted) values('Творог',240.0,'Молочные продукты','Россия',false);
