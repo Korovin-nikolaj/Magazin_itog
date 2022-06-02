@@ -43,9 +43,10 @@ public class HomePage extends HttpServlet {
             throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
+        @SuppressWarnings("unchecked")
         LinkedHashMap<Integer, String> basket = (LinkedHashMap<Integer, String>) session.getAttribute("basket");
         if (basket == null) {
-            basket = new LinkedHashMap<Integer, String>();
+            basket = new LinkedHashMap<>();
         }
         LinkedHashMap<Integer, String> allProducts = ProductService.getAllProducts();
         request.setAttribute("basketSize", basket.size());

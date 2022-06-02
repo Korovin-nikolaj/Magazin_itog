@@ -23,20 +23,29 @@ public class UpdateProductEnd extends HttpServlet {
         String productCategory = req.getParameter("productCategory");
         String productCountry = req.getParameter("productCountry");
         String discounted = req.getParameter("discounted");
-        Product product = new Product(productName, Integer.valueOf(productId), Float.valueOf(price), productCategory, productCountry, Boolean.valueOf(discounted));
-        int countRows = ProductService.updateProduct(product);
-        req.setAttribute("countUpdateRows", countRows);
-        req.setAttribute("productName", productName);
-        LinkedHashMap<Integer, String> allProducts = ProductService.getAllProducts();
-        req.setAttribute("allProducts", allProducts);
-        String path = "/editProducts.jsp";
-        ServletContext servletContext = getServletContext();
-        RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
-        requestDispatcher.forward(req, resp);
+        if (productId == null) {
+            forwardRequest(req, resp, "/errorPage.jsp");
+        } else {
+            price = (price == null) ? "0" : price;
+            discounted = (discounted == null) ? "false" : discounted;
+            Product product = new Product(productName, Integer.parseInt(productId), Float.parseFloat(price), productCategory, productCountry, Boolean.parseBoolean(discounted));
+            int countRows = ProductService.updateProduct(product);
+            req.setAttribute("countUpdateRows", countRows);
+            req.setAttribute("productName", productName);
+            LinkedHashMap<Integer, String> allProducts = ProductService.getAllProducts();
+            req.setAttribute("allProducts", allProducts);
+            forwardRequest(req, resp, "/editProducts.jsp");
+        }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
+    }
+
+    private void forwardRequest(HttpServletRequest req, HttpServletResponse resp, String path) throws ServletException, IOException {
+        ServletContext servletContext = getServletContext();
+        RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
+        requestDispatcher.forward(req, resp);
     }
 }

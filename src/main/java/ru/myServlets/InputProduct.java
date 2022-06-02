@@ -20,10 +20,10 @@ public class InputProduct extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection conn = Storage.getInstance().getConn();
         String productName = req.getParameter("productName");
-        float  price = Float.valueOf(req.getParameter("price"));
+        float  price = Float.parseFloat(req.getParameter("price"));
         String productCategory = req.getParameter("productCategory");
         String productCountry = req.getParameter("productCountry");
-        boolean discounted = Boolean.valueOf(req.getParameter("discounted"));
+        boolean discounted = Boolean.parseBoolean(req.getParameter("discounted"));
         int countRows = 0;
         try(Statement statement = conn.createStatement()) {
             String sqlCommand = "insert into products (productName, price, productCategory, productCountry, discounted) values('" + productName + "'," + price + ",'" + productCategory + "','" + productCountry + "'," + discounted + ");";

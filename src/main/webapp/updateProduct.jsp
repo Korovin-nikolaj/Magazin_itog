@@ -16,11 +16,12 @@
         </c:if>
         <p> Редактирование существующего товара: </p>
         <form action="/updateProductEnd" method="post">
+            <input type="hidden"  name="productId" value="${productId}"/>
             <p>Наименование товара: <input maxlength="50" size="50" name="productName" value="${productName}"/></p>
             <p>Цена: <input type="number"  size="15" name="price" value="${price}"/></p>
             <p>Категория товара: <input maxlength="25" size="25" name="productCategory" value="${productCategory}"/></p>
             <p>Страна-производитель: <input maxlength="25" size="25" name="productCountry" value="${productCountry}"/></p>
-            <p>Товар со скидкой: <input name="discounted" type="checkbox" value="${discounted}"/></p>
+            <p>Товар со скидкой: <input name="discounted" type="checkbox" value="true" <c:if test="${discounted}"> checked </c:if>/></p>
                 <input type="submit" value = "Обновить товар"/>
         </form>
     </body>

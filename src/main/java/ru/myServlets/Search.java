@@ -32,6 +32,7 @@ public class Search extends HttpServlet {
         LinkedHashMap<Integer, String> foundProducts = ProductService.findProducts(conditionText.toString());
         request.setAttribute("foundProducts", foundProducts);
         int basketSize = 0;
+        @SuppressWarnings("unchecked")
         ArrayList<Integer> basket = (ArrayList<Integer>) request.getSession().getAttribute("basket");
         if (basket != null) {
             basketSize = basket.size();
@@ -50,9 +51,9 @@ public class Search extends HttpServlet {
                     conditionText.append(" and ");
                 }
                 if (conditionType.equals("like")) {
-                    conditionText.append(columnName + " like '%" + value + "%'");
+                    conditionText.append(columnName).append(" like '%").append(value).append("%'");
                 } else if ("<>=".contains(conditionType)) {
-                    conditionText.append(columnName + conditionType + value);
+                    conditionText.append(columnName).append(conditionType).append(value);
                 }
             }
         }

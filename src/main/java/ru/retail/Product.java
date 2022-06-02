@@ -2,12 +2,12 @@ package ru.retail;
 
 public class Product {
 
-    private String name;
-    private int id;
-    private float price;
-    private String productCategory;
-    private String productCountry;
-    private boolean discounted;
+    private final String name;
+    private final int id;
+    private final float price;
+    private final String productCategory;
+    private final String productCountry;
+    private final boolean discounted;
 
 
     public Product(String name, int id, float price, String productCategory, String productCountry, boolean discounted) {
@@ -34,18 +34,6 @@ public class Product {
 
     public float getPrice() {
         return price;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
     }
 
     public String getProductCategory() {

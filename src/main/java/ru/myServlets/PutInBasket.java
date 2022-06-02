@@ -19,9 +19,10 @@ public class PutInBasket extends HttpServlet {
         String productView = request.getParameter("productView");
         if (productId != null) {
             HttpSession session = request.getSession();
+            @SuppressWarnings("unchecked")
             LinkedHashMap<Integer, String> basket = (LinkedHashMap<Integer, String>) session.getAttribute("basket");
             if (basket == null) {
-                basket = new LinkedHashMap<Integer, String>();
+                basket = new LinkedHashMap<>();
             }
             basket.put(Integer.valueOf(productId), productView);
             session.setAttribute("basket", basket);

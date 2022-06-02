@@ -58,12 +58,45 @@ public class ProductService {
     }
 
     public static Product getProduct(String productId) {
+        if (productId != null) {
+            if (!productId.isEmpty()) {
+                Connection conn = Storage.getInstance().getConn();
+                try(Statement statement = conn.createStatement()) {
+                    String sqlCommand = "select productName, price, productCategory, productCountry, discounted  from products where id = " + productId + ";";
+                    System.out.println(sqlCommand);
+                    ResultSet resultSet = statement.executeQuery(sqlCommand);
+                    if (resultSet.next()) {
+                        String productName = resultSet.getString("productName");
+                        float price = resultSet.getFloat("price");
+                        String productCategory = resultSet.getString("productCategory");
+                        String productCountry = resultSet.getString("productCountry");
+                        boolean discounted = resultSet.getBoolean("discounted");
+                        return new Product(productName, Integer.parseInt(productId), price, productCategory, productCountry, discounted);
+                    }
 
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return null;
     }
 
-    public static int updateProduct(Product productId) {
+    public static int updateProduct(Product product) {
+        if (product != null) {
+            Connection conn = Storage.getInstance().getConn();
+            try(Statement statement = conn.createStatement()) {
+                String sqlCommand = "update products set productName = '" + product.getName() +
+                        "', price = " + product.getPrice() +
+                        ", productCategory = '" + product.getProductCategory() +
+                        "', productCountry = '" + product.getProductCountry() +
+                        "', discounted = " + product.isDiscounted() + " where id = " + product.getId() + ";";
+                System.out.println(sqlCommand);
+                return statement.executeUpdate(sqlCommand);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return 0;
-
     }
-    }
+}

@@ -17,6 +17,7 @@ public class RemoveFromBasket extends HttpServlet {
         String productId = request.getParameter("productId");
         if (productId != null) {
             HttpSession session = request.getSession();
+            @SuppressWarnings("unchecked")
             LinkedHashMap<Integer, String> basket = (LinkedHashMap<Integer, String>) session.getAttribute("basket");
             if (basket == null) {
                 basket = new LinkedHashMap<>();
