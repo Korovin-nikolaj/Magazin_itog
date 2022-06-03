@@ -7,7 +7,7 @@
         <title>Редактирование товаров</title>
     </head>
     <body>
-        <p><a href="http://localhost:8082/">На главную</a>  |  <a href="http://localhost:8082/account">Профиль</a></p>
+        <p><a href="http://localhost:8082/">На главную</a>  |  <a href="http://localhost:8082/private/account">Профиль</a></p>
         <c:if test="${countAddRows == 1}">
             Товар ${productName} был успешно добавлен!
         </c:if>

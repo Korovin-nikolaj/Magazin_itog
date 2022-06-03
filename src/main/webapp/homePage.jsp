@@ -7,7 +7,7 @@
         <title>Интернет-магазин</title>
     </head>
     <body>
-        <p><a href="http://localhost:8082/account"> Профиль </a> |  | <a href="http://localhost:8082/managerLogin.jsp"> Войти как мененджер </a> | <a href="http://localhost:8082/basket.jsp"> Корзина(${basketSize}) </a></p>
+        <p><a href="http://localhost:8082/private/account"> Профиль </a> |  | <a href="http://localhost:8082/managerLogin.jsp"> Войти как мененджер </a> | <a href="http://localhost:8082/basket.jsp"> Корзина(${basketSize}) </a></p>
         <h3>Поиск товаров:</h3>
         <form action="/search" method="post">
             Наименование: <input name = "productName"/>  |  Категория: <input name = "productCategory"/> <br><br>

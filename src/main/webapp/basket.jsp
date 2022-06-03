@@ -7,7 +7,7 @@
         <title>Корзина</title>
     </head>
     <body>
-        <p><a href="http://localhost:8082/">На главную</a>  |  <a href="http://localhost:8082/account">Профиль</a></p>
+        <p><a href="http://localhost:8082/">На главную</a>  |  <a href="http://localhost:8082/private/account">Профиль</a></p>
         <h3>Товары в корзине</h3>
         <c:forEach var="product" items="${basket}">
             <p><c:out value="${product.value}"/>  <a href="http://localhost:8082/removeFromBasket?productId=${product.key}">Удалить</a></p>

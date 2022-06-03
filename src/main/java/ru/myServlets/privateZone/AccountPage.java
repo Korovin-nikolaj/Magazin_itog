@@ -1,4 +1,4 @@
-package ru.myServlets;
+package ru.myServlets.privateZone;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -9,15 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/account")
+@WebServlet(urlPatterns = "/private/account")
 public class AccountPage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String path = "/account.jsp";
-        Object isManager = req.getSession().getAttribute("isManager");
-        if (isManager == null) {
-            path = "/managerLogin.jsp";
-        }
+        String path = "/private/account.jsp";
         ServletContext servletContext = getServletContext();
         RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
         requestDispatcher.forward(req, resp);

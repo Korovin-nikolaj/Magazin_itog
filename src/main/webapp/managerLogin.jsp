@@ -6,6 +6,7 @@
     <title>Управление магазином</title>
 </head>
 <body>
+<p><a href="http://localhost:8082/">На главную</a></p>
 <p>Введите логин и пароль менеджера магазина
 <form action="/managerAuthentication" method="post">
     <p><strong>Логин:</strong>

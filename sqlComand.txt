@@ -24,7 +24,7 @@ create table statuses (id int primary key auto_increment,
     name varchar(25) NOT NULL);
 
 create table wallets (client int not null,
-    sum float not null);
+    sum float not null, comment varchar(50));
 
 insert into products (productName, price, productCategory, productCountry, discounted) values('Масло сливочное',600.0,'Молочные продукты','Россия',false);
 insert into products (productName, price, productCategory, productCountry, discounted) values('Творог',240.0,'Молочные продукты','Россия',false);
