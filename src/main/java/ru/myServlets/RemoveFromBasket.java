@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 @WebServlet(urlPatterns = "/removeFromBasket")
@@ -18,12 +19,18 @@ public class RemoveFromBasket extends HttpServlet {
         if (productId != null) {
             HttpSession session = request.getSession();
             @SuppressWarnings("unchecked")
-            LinkedHashMap<Integer, String> basket = (LinkedHashMap<Integer, String>) session.getAttribute("basket");
-            if (basket == null) {
-                basket = new LinkedHashMap<>();
+            HashMap<Integer, String> basketForView = (HashMap<Integer, String>) session.getAttribute("basketForView");
+            if (basketForView == null) {
+                basketForView = new HashMap<>();
             }
-            basket.remove(Integer.valueOf(productId));
-            session.setAttribute("basket", basket);
+            basketForView.remove(Integer.valueOf(productId));
+            @SuppressWarnings("unchecked")
+            HashMap<Integer, Integer> basketWithQuantity = (HashMap<Integer, Integer>) session.getAttribute("basketWithQuantity");
+            if (basketWithQuantity == null) {
+                basketWithQuantity = new HashMap<>();
+            }
+            session.setAttribute("basketForView", basketForView);
+            session.setAttribute("basketWithQuantity", basketWithQuantity);
         }
         String path = "/basket.jsp";
         ServletContext servletContext = getServletContext();

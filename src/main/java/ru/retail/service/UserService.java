@@ -1,6 +1,5 @@
 package ru.retail.service;
 
-import ru.retail.Product;
 import ru.retail.Storage;
 import ru.retail.User;
 
@@ -60,8 +59,7 @@ public class UserService {
     public static User getUser(String clientId) {
         if (clientId != null) {
             if (!clientId.isEmpty()) {
-                Connection conn = Storage.getInstance().getConn();
-                try(Statement statement = conn.createStatement()) {
+                try(Statement statement = Storage.getInstance().getConn().createStatement()) {
                     String sqlCommand = "select name, phone, hashPassword from clients where id = " + clientId + ";";
                     System.out.println(sqlCommand);
                     ResultSet resultSet = statement.executeQuery(sqlCommand);
@@ -78,5 +76,56 @@ public class UserService {
             }
         }
         return null;
+    }
+
+    public static int updateUser(User user, HttpSession session) {
+        if (user != null) {
+            Connection conn = Storage.getInstance().getConn();
+            try(Statement statement = conn.createStatement()) {
+                String sqlCommand = "update clients set name = '" + user.getName() +
+                        "', phone = '" + user.getPhone() +
+                        "', hashPassword = " + user.getHashPassword() + " where id = " + user.getId() + ";";
+                session.setAttribute("clientName", user.getName());
+                session.setAttribute("clientId", user.getId());
+                session.setAttribute("clientPhone", user.getPhone());
+                System.out.println(sqlCommand);
+                return statement.executeUpdate(sqlCommand);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
+    }
+
+    public static float getClientBalance(int clientId) {
+        if (clientId != 0 ) {
+            try(Statement statement = Storage.getInstance().getConn().createStatement()) {
+                String sqlCommand = "select sum(sum) sum from wallets where client = " + clientId + ";";
+                System.out.println(sqlCommand);
+                ResultSet resultSet = statement.executeQuery(sqlCommand);
+                if (resultSet.next()) {
+                    return resultSet.getFloat("sum");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return 0;
+    }
+
+    public static int enterMoney(String clientId, String sum, String comments) {
+        if (clientId != null) {
+            if (!clientId.isEmpty()) {
+                try(Statement statement = Storage.getInstance().getConn().createStatement()) {
+                    String sqlCommand = "insert into wallets (client, sum, comment) values (" + clientId + ", " + sum + ", '" + comments + "');";
+                    System.out.println(sqlCommand);
+                    return statement.executeUpdate(sqlCommand);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return 0;
     }
 }

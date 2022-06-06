@@ -1,7 +1,7 @@
 package ru.myServlets.privateZone;
 
-import ru.retail.Product;
-import ru.retail.service.ProductService;
+import ru.retail.User;
+import ru.retail.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -11,30 +11,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.LinkedHashMap;
 
-@WebServlet(urlPatterns = "/updateProductEnd")
+@WebServlet(urlPatterns = "/private/editUserInfoEnd")
 public class EditUserInfoEnd extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String productId = req.getParameter("productId");
-        String productName = req.getParameter("productName");
-        String price = req.getParameter("price");
-        String productCategory = req.getParameter("productCategory");
-        String productCountry = req.getParameter("productCountry");
-        String discounted = req.getParameter("discounted");
-        if (productId == null) {
+        String clientId = req.getParameter("clientId");
+        String clientName = req.getParameter("clientName");
+        String phone = req.getParameter("phone");
+        String hashPassword = req.getParameter("hashPassword");
+        if (clientId == null) {
+            req.setAttribute("returnPage", "/userLogin.jsp");
             forwardRequest(req, resp, "/errorPage.jsp");
         } else {
-            price = (price == null) ? "0" : price;
-            discounted = (discounted == null) ? "false" : discounted;
-            Product product = new Product(productName, Integer.parseInt(productId), Float.parseFloat(price), productCategory, productCountry, Boolean.parseBoolean(discounted));
-            int countRows = ProductService.updateProduct(product);
+            User user = new User(clientName, Integer.parseInt(clientId), phone, Integer.parseInt(hashPassword));
+            int countRows = UserService.updateUser(user, req.getSession());
+            req.setAttribute("clientId", clientId);
+            req.setAttribute("clientName", clientName);
+            req.setAttribute("clientPhone", phone);
             req.setAttribute("countUpdateRows", countRows);
-            req.setAttribute("productName", productName);
-            LinkedHashMap<Integer, String> allProducts = ProductService.getAllProducts();
-            req.setAttribute("allProducts", allProducts);
-            forwardRequest(req, resp, "/editProducts.jsp");
+            req.setAttribute("clientBalance", UserService.getClientBalance(Integer.parseInt(clientId)));
+            forwardRequest(req, resp, "/private/account.jsp");
         }
     }
 

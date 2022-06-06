@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Управление магазином</title>
+        <title>Вход в профиль клиента</title>
     </head>
     <body>
         <p><a href="http://localhost:8082/">На главную</a></p>

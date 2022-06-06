@@ -14,11 +14,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 
-@WebServlet(urlPatterns = "/putInBasket")
-public class PutInBasket extends HttpServlet {
+@WebServlet(urlPatterns = "/changeQuantityInBasket")
+public class ChangeQuantityInBasket extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String productId = request.getParameter("productId");
+        String add = request.getParameter("add");
         if (productId != null) {
             HttpSession session = request.getSession();
             @SuppressWarnings("unchecked")
@@ -33,18 +34,27 @@ public class PutInBasket extends HttpServlet {
             }
             Integer element = basketWithQuantity.get(Integer.valueOf(productId));
             if (element != null) {
-                element = element + 1;
+                if ("1".equals(add)) {
+                    element = element + 1;
+                } else {
+                    element = element - 1;
+                }
             } else {
                 element = 1;
             }
-            basketWithQuantity.put(Integer.valueOf(productId), element);
-            Product product = ProductService.getProduct(productId);
-            basketForView.put(Integer.valueOf(productId), product.getName() + " по цене " + product.getPrice() + " рублей. " + element + " шт.");
+            if (element > 0) {
+                basketWithQuantity.put(Integer.valueOf(productId), element);
+                Product product = ProductService.getProduct(productId);
+                basketForView.put(Integer.valueOf(productId), product.getName() + " по цене " + product.getPrice() + " рублей. " + element + " шт.");
+            } else {
+                basketWithQuantity.remove(Integer.valueOf(productId));
+                basketForView.remove(Integer.valueOf(productId));
+            }
             session.setAttribute("basketWithQuantity", basketWithQuantity);
             session.setAttribute("basketForView", basketForView);
 
         }
-        String path = "/";
+        String path = "/basket.jsp";
         ServletContext servletContext = getServletContext();
         RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
         requestDispatcher.forward(request, response);

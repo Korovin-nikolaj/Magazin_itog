@@ -22,6 +22,7 @@ public class UserAuthentication extends HttpServlet {
         String path = "/errorLogin.jsp";
         if (UserService.isPasswordCorrect(login, password, session)) {
             path = "/private/account.jsp";
+            req.setAttribute("clientBalance", UserService.getClientBalance((Integer)session.getAttribute("clientId")));
             session.setAttribute("isAuthorizedUser", true);
         } else {
             req.setAttribute("returnPage", "userLogin.jsp");

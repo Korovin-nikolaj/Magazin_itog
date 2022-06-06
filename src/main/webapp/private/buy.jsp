@@ -4,13 +4,17 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Профиль клиента</title>
+    <title>Оплата товара</title>
 </head>
 <body>
 <p><a href="http://localhost:8082/">На главную</a></p>
 <h3>Личная информация</h3>
-<c:if test="${countUpdateRows == 1}">
-    Личная информация была успешно обновлена!
+<c:if test="${totalSum > clientBalance}">
+    <p>Не хватает средств для оплаты. Пополните счет.</p>
+</c:if>
+<c:if test="${totalSum <= clientBalance}">
+    <p>После нажатия на кнопку будет произведена оплат товара.</p>
+    <p><a href="/private/buyPage"> Произвести оплату </a></p>
 </c:if>
 <p> ИД: ${clientId}</p>
 <p> Имя: ${clientName}</p>

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 @WebServlet(urlPatterns = "/")
@@ -44,12 +45,19 @@ public class HomePage extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         @SuppressWarnings("unchecked")
-        LinkedHashMap<Integer, String> basket = (LinkedHashMap<Integer, String>) session.getAttribute("basket");
-        if (basket == null) {
-            basket = new LinkedHashMap<>();
+        HashMap<Integer, Integer> basketWithQuantity = (HashMap<Integer, Integer>) session.getAttribute("basketWithQuantity");
+        if (basketWithQuantity == null) {
+            basketWithQuantity = new HashMap<>();
+            session.setAttribute("basketWithQuantity", basketWithQuantity);
+        }
+        @SuppressWarnings("unchecked")
+        HashMap<Integer, String> basketForView = (HashMap<Integer, String>) session.getAttribute("basketForView");
+        if (basketForView == null) {
+            basketForView = new HashMap<>();
+            session.setAttribute("basketForView", basketForView);
         }
         LinkedHashMap<Integer, String> allProducts = ProductService.getAllProducts();
-        request.setAttribute("basketSize", basket.size());
+        request.setAttribute("basketSize", basketWithQuantity.size());
         request.setAttribute("allProducts", allProducts);
         String path = "/homePage.jsp";
         ServletContext servletContext = getServletContext();
