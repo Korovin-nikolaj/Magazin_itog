@@ -1,6 +1,8 @@
 package ru.retail;
 
-public class BasketRow {
+import java.io.Serializable;
+
+public class BasketRow implements Serializable {
     private int productId;
     private String productName;
     private float quantity;
@@ -11,6 +13,13 @@ public class BasketRow {
         this.productName = productName;
         this.quantity = quantity;
         this.price = price;
+    }
+
+    public BasketRow() {
+        this.productId = 0;
+        this.productName = "";
+        this.quantity = 0;
+        this.price = 0;
     }
 
     public String getProductName() {

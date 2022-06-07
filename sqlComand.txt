@@ -13,12 +13,12 @@ create table clients (id int primary key auto_increment,
 create table orders (id int primary key auto_increment,
     client int NOT NULL,
     sum float,
-    address varchar(25),
+    address varchar(100),
     status int,
     comments varchar(50));
 
 create table orderComposition (orderId int NOT NULL,
-    productId int NOT NULL);
+    productId int NOT NULL, quantity float);
 
 create table statuses (id int primary key auto_increment,
     name varchar(25) NOT NULL);

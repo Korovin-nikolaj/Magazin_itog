@@ -1,6 +1,7 @@
 package ru.myServlets.privateZone;
 
 import ru.retail.User;
+import ru.retail.service.MoneyService;
 import ru.retail.service.UserService;
 
 import javax.servlet.RequestDispatcher;
@@ -30,7 +31,7 @@ public class EditUserInfoEnd extends HttpServlet {
             req.setAttribute("clientName", clientName);
             req.setAttribute("clientPhone", phone);
             req.setAttribute("countUpdateRows", countRows);
-            req.setAttribute("clientBalance", UserService.getClientBalance(Integer.parseInt(clientId)));
+            req.setAttribute("clientBalance", MoneyService.getClientBalance(Integer.parseInt(clientId)));
             forwardRequest(req, resp, "/private/account.jsp");
         }
     }

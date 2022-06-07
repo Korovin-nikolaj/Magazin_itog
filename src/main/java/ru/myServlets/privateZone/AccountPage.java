@@ -1,5 +1,6 @@
 package ru.myServlets.privateZone;
 
+import ru.retail.service.MoneyService;
 import ru.retail.service.UserService;
 
 import javax.servlet.RequestDispatcher;
@@ -18,7 +19,7 @@ public class AccountPage extends HttpServlet {
         String path = "/private/account.jsp";
         Object clientId = req.getSession().getAttribute("clientId");
         if (clientId != null) {
-            float clientBalance = UserService.getClientBalance((Integer)clientId);
+            float clientBalance = MoneyService.getClientBalance((Integer)clientId);
             req.setAttribute("clientBalance", clientBalance);
         } else {
             req.setAttribute("returnPage", "userLogin.jsp");

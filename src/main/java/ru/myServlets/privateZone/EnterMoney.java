@@ -1,6 +1,7 @@
 package ru.myServlets.privateZone;
 
 import ru.retail.User;
+import ru.retail.service.MoneyService;
 import ru.retail.service.UserService;
 
 import javax.servlet.RequestDispatcher;
@@ -18,8 +19,8 @@ public class EnterMoney extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String clientId = req.getParameter("clientId");
         String sum = req.getParameter("sum");
-        int countRows = UserService.enterMoney(clientId, sum, "Внесение денег на счет.");
-        req.setAttribute("clientBalance", UserService.getClientBalance(Integer.parseInt(clientId)));
+        int countRows = MoneyService.enterMoney(clientId, sum, "Внесение денег на счет.");
+        req.setAttribute("clientBalance", MoneyService.getClientBalance(Integer.parseInt(clientId)));
         req.setAttribute("countAddRows", countRows);
         String path = "/private/account.jsp";
         ServletContext servletContext = getServletContext();
