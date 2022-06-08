@@ -1,6 +1,5 @@
 package ru.myServlets;
 
-import ru.retail.service.ProductService;
 import ru.retail.service.UserService;
 
 import javax.servlet.RequestDispatcher;

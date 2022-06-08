@@ -1,6 +1,6 @@
 package ru.myServlets.privateZone;
 
-import ru.retail.service.MoneyService;
+import ru.retail.service.OrderService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -27,7 +27,7 @@ public class BuyPage extends HttpServlet {
         HashMap<Integer, Integer> basketWithQuantity = (HashMap<Integer, Integer>) session.getAttribute("basketWithQuantity");
         boolean requestComplete = false;
         try {
-            requestComplete = MoneyService.enterOrder(clientId, sum, comments, address, basketWithQuantity);
+            requestComplete = OrderService.enterOrder(clientId, sum, comments, address, basketWithQuantity);
         } catch (SQLException e) {
             e.printStackTrace();
         }

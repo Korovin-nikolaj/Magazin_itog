@@ -1,8 +1,6 @@
 package ru.myServlets.privateZone;
 
-import ru.retail.User;
 import ru.retail.service.MoneyService;
-import ru.retail.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;

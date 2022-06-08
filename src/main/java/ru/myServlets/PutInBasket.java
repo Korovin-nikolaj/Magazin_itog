@@ -42,7 +42,6 @@ public class PutInBasket extends HttpServlet {
             basketForView.put(Integer.valueOf(productId), product.getName() + " по цене " + product.getPrice() + " рублей. " + element + " шт.");
             session.setAttribute("basketWithQuantity", basketWithQuantity);
             session.setAttribute("basketForView", basketForView);
-
         }
         String path = "/";
         ServletContext servletContext = getServletContext();

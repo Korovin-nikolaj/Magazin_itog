@@ -26,9 +26,11 @@
         <br>
         <h3>Список товаров в корзине</h3>
         <table>
-            <td><c:out value="Товар"/></td>
-            <td><c:out value="Количество"/></td>
-            <td><c:out value="Цена"/></td>
+            <tr>
+                <td>Товар</td>
+                <td>Количество</td>
+                <td>Цена</td>
+            </tr>
             <c:forEach var="product" items="${basket}">
                 <tr>
                     <td><c:out value="${product.value.productName}"/></td>

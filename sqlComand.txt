@@ -23,9 +23,15 @@ create table orderComposition (orderId int NOT NULL,
 create table statuses (id int primary key auto_increment,
     name varchar(25) NOT NULL);
 
-create table wallets (client int not null,
+create table wallets (id int primary key auto_increment,
+    client int not null,
     sum float not null, comment varchar(50));
 
 insert into products (productName, price, productCategory, productCountry, discounted) values('Масло сливочное',600.0,'Молочные продукты','Россия',false);
 insert into products (productName, price, productCategory, productCountry, discounted) values('Творог',240.0,'Молочные продукты','Россия',false);
 insert into products (productName, price, productCategory, productCountry, discounted) values('Картофель',70.0,'Овощи','Россия',false);
+
+insert into statuses (id, name) values (1, 'Сформирован');
+insert into statuses (id, name) values (2, 'Оплачен');
+insert into statuses (id, name) values (3, 'В службе доставки');
+insert into statuses (id, name) values (4, 'Доставлен');

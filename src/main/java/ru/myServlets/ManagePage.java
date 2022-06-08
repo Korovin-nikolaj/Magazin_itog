@@ -17,7 +17,6 @@ public class ManagePage extends HttpServlet {
         Object isManager = req.getSession().getAttribute("isManager");
         if (isManager == null) {
             path = "/managerLogin.jsp";
-
         }
         ServletContext servletContext = getServletContext();
         RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);

@@ -1,6 +1,8 @@
 package ru.myServlets;
 
+import ru.retail.BuyHistoryRow;
 import ru.retail.service.MoneyService;
+import ru.retail.service.OrderService;
 import ru.retail.service.UserService;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
 
 @WebServlet(urlPatterns = "/userAuthentication")
 public class UserAuthentication extends HttpServlet {
@@ -25,6 +28,8 @@ public class UserAuthentication extends HttpServlet {
             path = "/private/account.jsp";
             req.setAttribute("clientBalance", MoneyService.getClientBalance((Integer)session.getAttribute("clientId")));
             session.setAttribute("isAuthorizedUser", true);
+            HashMap<Integer, BuyHistoryRow> buyHistory = OrderService.getBuyHistory(((Integer)session.getAttribute("clientId")).toString());
+            req.setAttribute("buyHistory", buyHistory);
         } else {
             req.setAttribute("returnPage", "userLogin.jsp");
         }
